@@ -86,6 +86,25 @@ module Wfetch
   
   repeat = 1
 
+  if Time.local.minute < 10
+      time = (Time.local.hour.to_s + 0.to_s + Time.local.minute.to_s).to_i
+
+        if time < 1200
+          message = "#{bold}#{orange}Have a good morning!#{reset}"
+        elsif time >= 1200
+          message = "#{bold}#{orange}Have a good afternoon!#{reset}"
+        end
+
+  elsif Time.local.minute >= 10
+      time = (Time.local.hour.to_s + Time.local.minute.to_s).to_i
+      if time < 1200
+        message = "#{bold}#{orange}Have a good morning!#{reset}"
+      elsif time >= 1200
+        message = "#{bold}#{orange}Have a good afternoon!#{reset}"
+      end
+  end
+
+
   vars = {
     "{temp_f}" => temp_f,
     "{temp_c}" => temp_c,
@@ -104,7 +123,8 @@ module Wfetch
     "{orange}" => orange,
     "{bold}" => bold,
     "{reset}" => reset,
-    "{icon}" => nil
+    "{icon}" => nil,
+    "{goodbye}" => message
   }
 
   File.each_line("/home/koffeejava/.local/share/Wfetch/disp.toml") do |line|

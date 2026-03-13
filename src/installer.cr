@@ -97,7 +97,8 @@ city = gets
 
 puts "#{orange}#{bold}Config setup finished. Starting disp setup.#{reset}"
 
-File.write("/home/#{sudo_user}/.local/share/Wfetch/config.toml", "api = \"#{api}\"
+File.write("/home/#{sudo_user}/.local/share/Wfetch/config.toml", "
+api = \"#{api}\"
 city = \"#{city}\"")
 
 puts "#{orange}#{bold}Would you like customary (1), metric (2), or both (3)?#{reset}"
