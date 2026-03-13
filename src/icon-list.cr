@@ -1,12 +1,21 @@
 
 
 def icon(id)
-    orange = "\e[38;5;214m"
+    
     gray = "\e[38;5;241m"
     blue = "\e[38;5;33m"
     yellow = "\e[38;5;220m"
     reset = "\e[0m"
     bold = "\033[1m"
+
+    time = (Time.local.hour.to_s + Time.local.minute.to_s).to_i
+
+    if time > 1200
+        orange = "\e[38;5;235m"
+    else
+        orange = "\e[38;5;214m"
+    end
+
     if id == 1000
         print "#{bold}#{orange}
         ⠀⠀⠀⠀⡄⡢⡪⢪⢊⠎⡆⡢⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
