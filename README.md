@@ -1,9 +1,7 @@
 # Wfetch-cr
 
 Wfetch-cr is a rewrite of one of my programs, wfetch (made in python)
-
 I made this version because I wanted to learn a new programming language and take advantage of the speed of crystal!
-
 This version of wfetch is semi-backwards compatible (config.toml will work! But not disp.toml...)
 
 ## Installation
