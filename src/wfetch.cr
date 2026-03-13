@@ -42,7 +42,7 @@ module Wfetch
 
 
 
-  config = TOML.parse(File.read("/home/koffeejava/.local/share/Wfetch/config.toml"))
+  config = TOML.parse(File.read(Path["~/.local/share/Wfetch/config.toml"].expand(home: true)))
   city = config["city"]
   api_key = config["api"]
 
@@ -77,7 +77,7 @@ module Wfetch
   windchill_c = data["current"]["windchill_c"]
   id = data["current"]["condition"]["code"]
   
-  disp = TOML.parse(File.read("/home/koffeejava/.local/share/Wfetch/disp.toml"))
+  disp = TOML.parse(File.read(Path["~/.local/share/Wfetch/disp.toml"].expand(home: true)))
 
   
   repeat = 1
