@@ -11,8 +11,6 @@ module Wfetch
   bold = "\033[1m"
   reset = "\e[0m"
 
-  puts "#{bold}#{orange}Wfetch KoffeeJava 2026#{reset}"
-
   debug = false
 
   OptionParser.parse do |parser|
@@ -29,7 +27,11 @@ module Wfetch
     print "End"
     exit(1)
     }
-    parser.on("-v", "--verbose", "Gives additional details.") {debug = true}
+    parser.on("-r", "--verbose", "Gives additional details.") {debug = true}
+    parser.on("-v", "--version", "Shows the current version of wfetch") {
+      puts "#{bold}#{orange}Wfetch 0.1.0 KoffeeJava 2026#{reset}"
+      exit
+    }
     parser.on("-h", "--help", "Show this help") do
     
       puts parser
@@ -42,7 +44,7 @@ module Wfetch
     end
   end
 
-
+   print "#{bold}#{orange}Wfetch KoffeeJava 2026#{reset}"
 
   config = TOML.parse(File.read(Path["~/.local/share/Wfetch/config.toml"].expand(home: true)))
   city = config["city"]
