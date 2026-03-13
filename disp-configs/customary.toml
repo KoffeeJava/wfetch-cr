@@ -1,0 +1,9 @@
+# This is for customary units
+
+1 = "{icon}"
+2 = "Live Temperature: {temp_f}°"
+3 = "Feels like: {feels_temp_f}°"
+4 = "Wind Speed: {wind_mph} MPH"
+5 = "Humidity: {humidity}%"
+6 = "Pressure: {pressure_in}"
+7 = "Description: {orange}{bold}{description}{reset}"

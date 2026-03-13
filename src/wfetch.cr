@@ -82,10 +82,14 @@ module Wfetch
   
   repeat = 1
   File.each_line("/home/koffeejava/.local/share/Wfetch/disp.toml") do |line|
-    if disp["#{repeat}"].to_s == "{icon}"
-      icon(id)
+    entry = disp["#{repeat}"]?  # Use []? to avoid KeyError
+    
+    if entry
+      if entry.to_s == "{icon}"
+        icon(id)
+      end
+      puts entry.to_s.gsub("{temp_f}", temp).gsub("{temp_c}", tempm).gsub("{feels_temp_f}", fftemp).gsub("{feels_temp_c}", fctemp).gsub("{wind_mph}", cwind).gsub("{wind_kph}", mwind).gsub("{humidity}", humidity).gsub("{pressure_in}", pressin).gsub("{description}", desc).gsub("{orange}", "\e[38;5;214m").gsub("{blue}", "\e[38;5;33m").gsub("{bold}", "\033[1m").gsub("{reset}", "\e[0m").gsub("{icon}", nil)
     end
-    puts disp["#{repeat}"].to_s.gsub("{temp_f}", temp).gsub("{temp_c}", tempm).gsub("{feels_temp_f}", fftemp).gsub("{feels_temp_c}", fctemp).gsub("{wind_mph}", cwind).gsub("{wind_kph}", mwind).gsub("{humidity}", humidity).gsub("{pressure_in}", pressin).gsub("{description}", desc).gsub("{orange}", "\e[38;5;214m").gsub("{blue}", "\e[38;5;33m").gsub("{bold}", "\033[1m").gsub("{reset}", "\e[0m").gsub("{icon}", nil)
     
     repeat += 1
   end
