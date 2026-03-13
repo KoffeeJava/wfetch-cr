@@ -24,6 +24,8 @@ module Wfetch
     icon(1009)
     icon(1072)
     icon(1087)
+    icon(1066)
+    icon(1030)
     print "End"
     exit(1)
     }
