@@ -59,18 +59,18 @@ module Wfetch
     puts data
   end
 
-  fftemp = data["current"]["feelslike_f"]
-  fctemp = data["current"]["feelslike_c"]
-  temp = data["current"]["temp_f"]
-  tempm = data["current"]["temp_c"]
+  feelslike_f = data["current"]["feelslike_f"]
+  feelslike_c = data["current"]["feelslike_c"]
+  temp_f = data["current"]["temp_f"]
+  temp_c = data["current"]["temp_c"]
   desc = data["current"]["condition"]["text"]
-  pressin = data["current"]["pressure_in"]
-  pressmb = data["current"]["pressure_mb"]
-  cwind = data["current"]["wind_mph"]
-  mwind = data["current"]["wind_kph"]
+  press_in = data["current"]["pressure_in"]
+  press_mb = data["current"]["pressure_mb"]
+  wind_mph = data["current"]["wind_mph"]
+  wind_kph = data["current"]["wind_kph"]
   humidity = data["current"]["humidity"]
-  vism = data["current"]["vis_miles"]
-  visk = data["current"]["vis_km"]
+  vis_mi = data["current"]["vis_miles"]
+  vis_km = data["current"]["vis_km"]
   heatindex_f = data["current"]["heatindex_f"]
   heatindex_c = data["current"]["heatindex_c"]
   windchill_f = data["current"]["windchill_f"]
@@ -81,14 +81,37 @@ module Wfetch
 
   
   repeat = 1
+
+  vars = {
+    "{temp_f}" => temp_f,
+    "{temp_c}" => temp_c,
+    "{feels_like_f}" => feelslike_f,
+    "{feels_like_c}" => feelslike_c,
+    "{wind_mph}" => wind_mph,
+    "{wind_kph}" => wind_kph,
+    "{pressure_in}" => press_in,
+    "{pressure_mb}" => press_mb,
+    "{humidity}" => humidity,
+    "{visibility_mi}" => vis_mi,
+    "{visibility_km}" => vis_km,
+    "{windchill_f}" => windchill_f,
+    "{windchill_c}" => windchill_c,
+    "{description}" => desc,
+    "{orange}" => orange,
+    "{bold}" => bold,
+    "{reset}" => reset,
+    "{icon}" => nil
+  }
+
   File.each_line("/home/koffeejava/.local/share/Wfetch/disp.toml") do |line|
-    entry = disp["#{repeat}"]?  # Use []? to avoid KeyError
+    entry = disp["#{repeat}"]?
     
     if entry
       if entry.to_s == "{icon}"
         icon(id)
       end
-      puts entry.to_s.gsub("{temp_f}", temp).gsub("{temp_c}", tempm).gsub("{feels_temp_f}", fftemp).gsub("{feels_temp_c}", fctemp).gsub("{wind_mph}", cwind).gsub("{wind_kph}", mwind).gsub("{humidity}", humidity).gsub("{pressure_in}", pressin).gsub("{description}", desc).gsub("{orange}", "\e[38;5;214m").gsub("{blue}", "\e[38;5;33m").gsub("{bold}", "\033[1m").gsub("{reset}", "\e[0m").gsub("{icon}", nil)
+      pattern = Regex.new(vars.keys.map { |k| Regex.escape(k) }.join("|"))
+      puts entry.to_s.gsub(pattern, vars)
     end
     
     repeat += 1
