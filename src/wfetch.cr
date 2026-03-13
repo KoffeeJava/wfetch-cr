@@ -5,7 +5,7 @@ require "./icon-list"
 require "option_parser"
 
 module Wfetch
-  VERSION = "0.1.0"
+  VERSION = "1.0.0"
   orange = "\e[38;5;214m"
   red = "\e[0;31m"
   bold = "\033[1m"
@@ -29,7 +29,7 @@ module Wfetch
     }
     parser.on("-r", "--verbose", "Gives additional details.") {debug = true}
     parser.on("-v", "--version", "Shows the current version of wfetch") {
-      puts "#{bold}#{orange}Wfetch 0.1.0 KoffeeJava 2026#{reset}"
+      puts "#{bold}#{orange}Wfetch 1.0.0 KoffeeJava 2026#{reset}"
       exit
     }
     parser.on("-h", "--help", "Show this help") do
