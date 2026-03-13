@@ -7,7 +7,7 @@ require "option_parser"
 module Wfetch
   VERSION = "0.1.0"
   orange = "\e[38;5;214m"
-  red = "\e[38;5;52m"
+  red = "\e[0;31m"
   bold = "\033[1m"
   reset = "\e[0m"
 
