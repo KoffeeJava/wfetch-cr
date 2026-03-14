@@ -42,7 +42,7 @@ OptionParser.parse do |parser|
       exit(0)
       end
     
-      Dir.mkdir("~//.local/share/Wfetch")
+      Dir.mkdir(Path["~/.local/share/Wfetch"].expand(home: true))
 
 
       puts "Please enter your WeatherApi key (Learn to get one at README.md):"
@@ -55,21 +55,23 @@ OptionParser.parse do |parser|
 
       puts "#{orange}#{bold}Config setup finished. Starting disp setup.#{reset}"
 
-      File.write("/home/#{sudo_user}/.local/share/Wfetch/config.toml", "api = \"#{api}\"
-      city = \"#{city}\"")
+      File.write(Path["~/.local/share/Wfetch/config.toml"].expand(home: true), "
+      api = \"#{api}\"
+      city = \"#{city}\"
+      ")
 
       puts "#{orange}#{bold}Would you like customary (1), metric (2), or both (3)?#{reset}"
 
       choice = gets
 
       if choice == "1"
-        File.copy("data/1.toml", "/home/#{sudo_user}/.local/share/Wfetch/disp.toml")
+        File.copy("data/1.toml", Path["~/.local/share/Wfetch/disp.toml"].expand(home: true))
       elsif choice == "2"
-        File.copy("data/2.toml", "/home/#{sudo_user}/.local/share/Wfetch/disp.toml")
+        File.copy("data/2.toml", Path["~/.local/share/Wfetch/disp.toml"].expand(home: true))
       elsif choice == "3"
-        File.copy("data/3.toml", "/home/#{sudo_user}/.local/share/Wfetch/disp.toml")
+        File.copy("data/3.toml", Path["~/.local/share/Wfetch/disp.toml"].expand(home: true))
       else
-        File.copy("data/1.toml", "/home/#{sudo_user}/.local/share/Wfetch/disp.toml")
+        File.copy("data/1.toml", Path["~/.local/share/Wfetch/disp.toml"].expand(home: true))
       end
 
       puts "#{orange}#{bold}Setup finnished. Enjoy!#{reset}"
