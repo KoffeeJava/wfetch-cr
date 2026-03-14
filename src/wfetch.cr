@@ -12,6 +12,7 @@ module Wfetch
   reset = "\e[0m"
 
   debug = false
+  test_config = false
 
   OptionParser.parse do |parser|
     parser.banner = "Usage: wfetch [arguments]"
@@ -27,7 +28,12 @@ module Wfetch
     print "End"
     exit(1)
     }
-    parser.on("-r", "--verbose", "Gives additional details.") {debug = true}
+    parser.on("-d", "--debug", "Turns on debug mode.") {debug = true}
+    parser.on("-t", "--test-disp-config", "Test a disp config without editing yours.") {
+      test_config = true
+      puts "Please paste your config."
+      config = gets
+    }
     parser.on("-v", "--version", "Shows the current version of wfetch") {
       puts "#{bold}#{orange}Wfetch 1.0.0 KoffeeJava 2026#{reset}"
       exit
@@ -63,31 +69,31 @@ module Wfetch
     puts data
   end
 
-  feelslike_f = data["current"]["feelslike_f"]
-  feelslike_c = data["current"]["feelslike_c"]
-  temp_f = data["current"]["temp_f"]
-  temp_c = data["current"]["temp_c"]
-  desc = data["current"]["condition"]["text"]
-  press_in = data["current"]["pressure_in"]
-  press_mb = data["current"]["pressure_mb"]
-  wind_mph = data["current"]["wind_mph"]
-  wind_kph = data["current"]["wind_kph"]
-  humidity = data["current"]["humidity"]
-  vis_mi = data["current"]["vis_miles"]
-  vis_km = data["current"]["vis_km"]
-  heatindex_f = data["current"]["heatindex_f"]
-  heatindex_c = data["current"]["heatindex_c"]
-  windchill_f = data["current"]["windchill_f"]
-  windchill_c = data["current"]["windchill_c"]
+  feelslike_f = data["current"]["feelslike_f"].to_s.to_f
+  feelslike_c = data["current"]["feelslike_c"].to_s.to_f
+  temp_f = data["current"]["temp_f"].to_s.to_f
+  temp_c = data["current"]["temp_c"].to_s.to_f
+  desc = data["current"]["condition"]["text"].to_s
+  press_in = data["current"]["pressure_in"].to_s.to_f
+  press_mb = data["current"]["pressure_mb"].to_s.to_f
+  wind_mph = data["current"]["wind_mph"].to_s.to_f
+  wind_kph = data["current"]["wind_kph"].to_s.to_f
+  humidity = data["current"]["humidity"].to_s.to_f
+  vis_mi = data["current"]["vis_miles"].to_s.to_f
+  vis_km = data["current"]["vis_km"].to_s.to_f
+  heatindex_f = data["current"]["heatindex_f"].to_s.to_f
+  heatindex_c = data["current"]["heatindex_c"].to_s.to_f
+  windchill_f = data["current"]["windchill_f"].to_s.to_f
+  windchill_c = data["current"]["windchill_c"].to_s.to_f
   id = data["current"]["condition"]["code"]
   
   if debug == true
     disp = TOML.parse("
       1 = \"{icon}\"
-      2 = \"Live Temperature: {temp_f}°F\"
-      3 = \"Live Temperature: {temp_c}°C\"
-      4 = \"Feels like: {feels_like_f}°F\"
-      5 = \"Feels like: {feels_like_c}°C\"
+      2 = \"Live Temperature: {temp_f_color}{temp_f}{reset}°F\"
+      3 = \"Live Temperature: {temp_c_color}{temp_c}{reset}°C\"
+      4 = \"Feels like: {fl_f_color}{feels_like_f}{reset}°F\"
+      5 = \"Feels like: {fl_c_color}{feels_like_c}{reset}°C\"
       6 = \"Wind Speed: {wind_mph} MPH\"
       7 = \"Wind Speed: {wind_kph} KPH\"
       8 = \"Humidity: {humidity}%\"
@@ -96,6 +102,8 @@ module Wfetch
       11 = \"Description: {orange}{bold}{description}{reset}\"
       12 = \"{goodbye}\"
     ")
+  elsif test_config
+    disp = TOML.parse(config.to_s)
   else
     disp = TOML.parse(File.read(Path["~/.local/share/Wfetch/disp.toml"].expand(home: true)))
   end
@@ -103,7 +111,7 @@ module Wfetch
   repeat = 1
 
   if Time.local.minute < 10
-      time = (Time.local.hour.to_s + 0.to_s + Time.local.minute.to_s).to_i
+      time = (Time.local.hour.to_s + 0.to_s + Time.local.minute.to_s).to_f
 
         if time < 1200
           message = "#{bold}#{orange}Have a good morning!#{reset}"
@@ -111,7 +119,7 @@ module Wfetch
           message = "#{bold}#{orange}Have a good afternoon!#{reset}"
         end
   elsif Time.local.minute >= 10
-      time = (Time.local.hour.to_s + Time.local.minute.to_s).to_i
+      time = (Time.local.hour.to_s + Time.local.minute.to_s).to_f
       if time < 1200
         message = "#{bold}#{orange}Have a good morning!#{reset}"
       elsif time >= 1200
@@ -119,6 +127,37 @@ module Wfetch
       end
   end
 
+  if feelslike_f > 85
+    fl_f_color = bold + red
+  elsif (70..84).includes?(feelslike_f)
+    fl_f_color = bold + "\e[38;5;208m"
+  elsif feelslike_f < 70
+    fl_f_color = "\e[0;34m" + bold
+  end
+
+  if feelslike_c > 29
+    fl_c_color = bold + red
+  elsif (21..28).includes?(feelslike_c)
+    fl_c_color = bold + "\e[38;5;208m"
+  elsif feelslike_c < 21
+    fl_c_color = "\e[0;34m" + bold
+  end
+
+  if temp_f > 85
+    temp_f_color = bold + red
+  elsif (70..84).includes?(temp_f)
+    temp_f_color = bold + "\e[38;5;208m"
+  elsif temp_f < 70
+    temp_f_color = "\e[0;34m" + bold
+  end
+
+  if temp_c > 29
+    temp_c_color = bold + red
+  elsif (21..28).includes?(temp_c)
+    temp_c_color = bold + "\e[38;5;208m"
+  elsif temp_c < 21
+    temp_c_color = "\e[0;34m" + bold
+  end
 
   vars = {
     "{temp_f}" => temp_f,
@@ -137,6 +176,10 @@ module Wfetch
     "{description}" => desc,
     "{orange}" => orange,
     "{bold}" => bold,
+    "{fl_f_color}" => fl_f_color,
+    "{fl_c_color}" => fl_c_color,
+    "{temp_f_color}" => temp_f_color,
+    "{temp_c_color}" => temp_c_color,
     "{reset}" => reset,
     "{icon}" => nil,
     "{goodbye}" => message
