@@ -9,7 +9,7 @@ sudo_user = ENV["SUDO_USER"]?
 home = "/home/#{sudo_user}"
 
 OptionParser.parse do |parser|
-    parser.banner = "Usage: installer [arguments]"
+    parser.banner = "Usage: wf-tool [arguments]"
     parser.on("-i", "--install-only", "Only instals wfetch; Does not run setup") {
       if LibC.getuid != 0
         puts "#{red}#{bold}You must be in root to install wfetch!#{reset}"
@@ -90,5 +90,5 @@ OptionParser.parse do |parser|
   end
 
   if ARGV.empty?
-    puts "Run installer -h"
+    puts "Run wf-tool -h"
   end
