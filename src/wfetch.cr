@@ -194,7 +194,6 @@ module Wfetch
       pattern = Regex.new(vars.keys.map { |k| Regex.escape(k) }.join("|"))
       puts entry.to_s.gsub(pattern, vars)
     end
-    
     repeat += 1
   end
 
