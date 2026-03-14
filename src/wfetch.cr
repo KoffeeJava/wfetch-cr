@@ -8,7 +8,7 @@ module Wfetch
   VERSION = "1.0.0"
   orange = "\e[38;5;214m"
   red = "\e[0;31m"
-  bold = "\033[1m"
+  bold = "\e[1m"
   reset = "\e[0m"
 
   debug = false
@@ -129,7 +129,7 @@ module Wfetch
   if feelslike_f > 85
     fl_f_color = bold + red
   elsif (70..84).includes?(feelslike_f)
-    fl_f_color = bold + "\e[38;5;208m"
+    fl_f_color = bold + "\e[1;33m"
   elsif feelslike_f < 70
     fl_f_color = "\e[0;34m" + bold
   end
@@ -137,7 +137,7 @@ module Wfetch
   if feelslike_c > 29
     fl_c_color = bold + red
   elsif (21..28).includes?(feelslike_c)
-    fl_c_color = bold + "\e[38;5;208m"
+    fl_c_color = bold + "\e[1;33m"
   elsif feelslike_c < 21
     fl_c_color = "\e[0;34m" + bold
   end
@@ -145,7 +145,7 @@ module Wfetch
   if temp_f > 85
     temp_f_color = bold + red
   elsif (70..84).includes?(temp_f)
-    temp_f_color = bold + "\e[38;5;208m"
+    temp_f_color = bold + "\e[1;33m"
   elsif temp_f < 70
     temp_f_color = "\e[0;34m" + bold
   end
@@ -153,10 +153,19 @@ module Wfetch
   if temp_c > 29
     temp_c_color = bold + red
   elsif (21..28).includes?(temp_c)
-    temp_c_color = bold + "\e[38;5;208m"
+    temp_c_color = bold + "\e[1;33m"
   elsif temp_c < 21
     temp_c_color = "\e[0;34m" + bold
   end
+
+  if (26..73).includes?(wind_mph)
+    wind_mph_color = bold + red
+  elsif (13..25).includes?(wind_mph)
+    wind_mph_color = bold + "\e[1;33m"
+  elsif (1..12).includes?(wind_mph)
+    wind_mph_color = "\e[0;34m" + bold
+  end
+
 
   vars = {
     "{temp_f}" => temp_f,
@@ -179,6 +188,7 @@ module Wfetch
     "{fl_c_color}" => fl_c_color,
     "{temp_f_color}" => temp_f_color,
     "{temp_c_color}" => temp_c_color,
+    "{wind_mph_color}" => wind_mph_color,
     "{reset}" => reset,
     "{icon}" => nil,
     "{goodbye}" => message
@@ -186,7 +196,6 @@ module Wfetch
 
   File.each_line(Path["~/.local/share/Wfetch/disp.toml"].expand(home: true)) do |line|
     entry = disp["#{repeat}"]?
-    
     if entry
       if entry.to_s == "{icon}"
         icon(id)
