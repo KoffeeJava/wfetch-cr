@@ -81,8 +81,24 @@ module Wfetch
   windchill_c = data["current"]["windchill_c"]
   id = data["current"]["condition"]["code"]
   
-  disp = TOML.parse(File.read(Path["~/.local/share/Wfetch/disp.toml"].expand(home: true)))
-
+  if debug == true
+    disp = TOML.parse("
+      1 = \"{icon}\"
+  2 = \"Live Temperature: {temp_f}°F\"
+  3 = \"Live Temperature: {temp_c}°C\"
+  4 = \"Feels like: {feels_like_f}°F\"
+  5 = \"Feels like: {feels_like_c}°C\"
+  6 = \"Wind Speed: {wind_mph} MPH\"
+  7 = \"Wind Speed: {wind_kph} KPH\"
+  8 = \"Humidity: {humidity}%\"
+  9 = \"Pressure: {pressure_in} IN\"
+  10 = \"Pressure: {pressure_mb} MB\"
+  11 = \"Description: {orange}{bold}{description}{reset}\"
+  12 = \"{goodbye}\"
+    ")
+  else
+    disp = TOML.parse(File.read(Path["~/.local/share/Wfetch/disp.toml"].expand(home: true)))
+  end
   
   repeat = 1
 
@@ -127,7 +143,7 @@ module Wfetch
     "{goodbye}" => message
   }
 
-  File.each_line("/home/koffeejava/.local/share/Wfetch/disp.toml") do |line|
+  File.each_line(Path["~/.local/share/Wfetch/disp.toml"].expand(home: true)) do |line|
     entry = disp["#{repeat}"]?
     
     if entry

@@ -5,17 +5,13 @@ red = "\e[0;31m"
 bold = "\033[1m"
 reset = "\e[0m"
 
-lib C
-  fun getuid : UInt32
-end
-
 sudo_user = ENV["SUDO_USER"]?
 home = "/home/#{sudo_user}"
 
 OptionParser.parse do |parser|
     parser.banner = "Usage: installer [arguments]"
     parser.on("-i", "--install-only", "Only instals wfetch; Does not run setup") {
-      if C.getuid != 0
+      if LibC.getuid != 0
         puts "#{red}#{bold}You must be in root to install wfetch!#{reset}"
       exit(0)
       end
@@ -28,7 +24,7 @@ OptionParser.parse do |parser|
       exit
     }
     parser.on("-u", "--uninstall", "Uninstalls wfetch"){
-      if C.getuid != 0
+      if LibC.getuid != 0
         puts "#{red}#{bold}You must be in root to uninstall wfetch!#{reset}"
         exit(0)
       end
@@ -41,12 +37,12 @@ OptionParser.parse do |parser|
       exit
     }
     parser.on("-s", "--setup", "Runs setup") {
-      if C.getuid = 0
+      if LibC.getuid == 0
         puts "#{red}#{bold}Don't run the setup in root!#{reset}"
       exit(0)
       end
     
-      Dir.mkdir("/home/#{sudo_user}/.local/share/Wfetch")
+      Dir.mkdir("~//.local/share/Wfetch")
 
 
       puts "Please enter your WeatherApi key (Learn to get one at README.md):"
@@ -93,3 +89,4 @@ OptionParser.parse do |parser|
 
   if ARGV.empty?
     puts "Run installer -h"
+  end
