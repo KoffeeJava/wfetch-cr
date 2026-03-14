@@ -31,15 +31,12 @@ module Wfetch
     parser.on("-d", "--debug", "Turns on debug mode.") {debug = true}
     parser.on("-t", "--test-disp-config", "Test a disp config without editing yours.") {
       test_config = true
-      puts "Please paste your config."
-      config = gets
     }
     parser.on("-v", "--version", "Shows the current version of wfetch") {
       puts "#{bold}#{orange}Wfetch 1.0.0 KoffeeJava 2026#{reset}"
       exit
     }
     parser.on("-h", "--help", "Show this help") do
-    
       puts parser
       exit(1)
     end
@@ -103,7 +100,9 @@ module Wfetch
       12 = \"{goodbye}\"
     ")
   elsif test_config
-    disp = TOML.parse(config.to_s)
+    puts "\nPlease paste the path of the config"
+    path_config = gets
+    disp = TOML.parse(File.read(Path["#{path_config}"].expand(home: true)))
   else
     disp = TOML.parse(File.read(Path["~/.local/share/Wfetch/disp.toml"].expand(home: true)))
   end
