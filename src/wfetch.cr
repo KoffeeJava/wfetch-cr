@@ -34,6 +34,7 @@ module Wfetch
     }
     parser.on("-v", "--version", "Shows the current version of wfetch") {
       puts "#{bold}#{orange}Wfetch 1.1.0 KoffeeJava 2026#{reset}"
+      puts "Made in Crystal by KoffeeJava with Love"
       exit
     }
     parser.on("-h", "--help", "Show this help") do
@@ -49,7 +50,7 @@ module Wfetch
 
    print "#{bold}#{orange}Wfetch KoffeeJava 2026#{reset}"
 
-  config = TOML.parse(File.read(Path["~/.local/share/Wfetch/config.toml"].expand(home: true)))
+  config = TOML.parse(File.read("config/config.toml")].expand(home: true)))
   city = config["city"]
   api_key = config["api"]
 
@@ -104,7 +105,7 @@ module Wfetch
     path_config = gets
     disp = TOML.parse(File.read(Path["#{path_config}"].expand(home: true)))
   else
-    disp = TOML.parse(File.read(Path["~/.local/share/Wfetch/disp.toml"].expand(home: true)))
+    disp = TOML.parse(File.read())
   end
   
   repeat = 1
