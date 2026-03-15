@@ -31,7 +31,7 @@ At this time MacOS does not have a build.
 
 - Crystal compiler
 - Wfetch Source Code
-- wfetch-1.0.0-data.tar.xz
+- wfetch-1.0.0-data.tar.gz
 
 Download the latest release's source code and open your terminal inside the directory and run `shards build --release` and the build will be outputted in bin/
 
