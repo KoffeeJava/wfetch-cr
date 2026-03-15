@@ -1,6 +1,6 @@
 def icon(id)
     
-    gray = "\e[38;5;241m"
+    gray = "\e[38;5;8m"
     blue = "\e[38;5;33m"
     yellow = "\e[38;5;220m"
     reset = "\e[0m"
@@ -9,7 +9,7 @@ def icon(id)
     if Time.local.minute < 10
         time = (Time.local.hour.to_s + 0.to_s + Time.local.minute.to_s).to_i
             if time > 1830
-            orange = "\e[38;5;235m"
+            orange = "\e[38;5;8m"
         else
             orange = "\e[38;5;214m"
         end
