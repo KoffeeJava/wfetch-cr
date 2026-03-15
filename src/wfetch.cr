@@ -91,13 +91,14 @@ module Wfetch
       3 = \"Live Temperature: {temp_c_color}{temp_c}{reset}°C\"
       4 = \"Feels like: {fl_f_color}{feels_like_f}{reset}°F\"
       5 = \"Feels like: {fl_c_color}{feels_like_c}{reset}°C\"
-      6 = \"Wind Speed: {wind_mph} MPH\"
-      7 = \"Wind Speed: {wind_kph} KPH\"
+      6 = \"Wind Speed: {wind_mph_color}{wind_mph}{reset} MPH\"
+      7 = \"Wind Speed: {wind_kph_color}{wind_kph}{reset} KPH\"
       8 = \"Humidity: {humidity}%\"
       9 = \"Pressure: {pressure_in} IN\"
       10 = \"Pressure: {pressure_mb} MB\"
       11 = \"Description: {orange}{bold}{description}{reset}\"
       12 = \"{goodbye}\"
+
     ")
   elsif test_config
     puts "\nPlease paste the path of the config"
@@ -158,12 +159,20 @@ module Wfetch
     temp_c_color = "\e[0;34m" + bold
   end
 
-  if (26..73).includes?(wind_mph)
+  if wind_mph > 73
     wind_mph_color = bold + red
-  elsif (13..25).includes?(wind_mph)
+  elsif (13..26).includes?(wind_mph)
     wind_mph_color = bold + "\e[1;33m"
   elsif (1..12).includes?(wind_mph)
     wind_mph_color = "\e[0;34m" + bold
+  end
+
+  if wind_kph > 46
+    wind_kph_color = bold + red
+  elsif (20..45).includes?(wind_mph)
+    wind_kph_color = bold + "\e[1;33m"
+  elsif (1..19).includes?(wind_mph)
+    wind_kph_color = "\e[0;34m" + bold
   end
 
 
