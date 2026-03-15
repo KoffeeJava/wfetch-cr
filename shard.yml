@@ -8,8 +8,8 @@ targets:
   wfetch:
     main: src/wfetch.cr
   
-  wf-tool:
-    main: src/wf-tool.cr
+  wfp-tool:
+    main: src/wfp-tool.cr
 
 crystal: '>= 1.19.1'
 
