@@ -198,6 +198,7 @@ module Wfetch
     "{temp_f_color}" => temp_f_color,
     "{temp_c_color}" => temp_c_color,
     "{wind_mph_color}" => wind_mph_color,
+    "{wind_kph_color}" => wind_kph_color,
     "{reset}" => reset,
     "{icon}" => nil,
     "{goodbye}" => message
