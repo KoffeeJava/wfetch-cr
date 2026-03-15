@@ -8,14 +8,14 @@ def icon(id)
 
     if Time.local.minute < 10
         time = (Time.local.hour.to_s + 0.to_s + Time.local.minute.to_s).to_i
-            if time > 1200
+            if time > 1830
             orange = "\e[38;5;235m"
         else
             orange = "\e[38;5;214m"
         end
     elsif Time.local.minute >= 10
         time = (Time.local.hour.to_s + Time.local.minute.to_s).to_i
-            if time > 1200
+            if time > 1830
             orange = "\e[38;5;8m"
         else
             orange = "\e[38;5;214m"
