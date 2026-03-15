@@ -16,7 +16,7 @@ OptionParser.parse do |parser|
       exit(0)
       end
 
-      puts "#{orange}#{bold}wfetch installer 1.0.0#{reset}"
+      puts "#{orange}#{bold}wfetch installer#{reset}"
 
       File.copy("data/wfetch", "/usr/bin/wfetch")
 

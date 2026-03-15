@@ -63,7 +63,7 @@ module Wfetch
   data = JSON.parse(response.body.lines.join)
 
   if debug == true
-    puts data
+    puts "\n#{data}"
   end
 
   feelslike_f = data["current"]["feelslike_f"].to_s.to_f
@@ -98,7 +98,6 @@ module Wfetch
       10 = \"Pressure: {pressure_mb} MB\"
       11 = \"Description: {orange}{bold}{description}{reset}\"
       12 = \"{goodbye}\"
-
     ")
   elsif test_config
     puts "\nPlease paste the path of the config"
